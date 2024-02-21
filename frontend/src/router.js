@@ -8,11 +8,15 @@ import AddUserPage from "./pages/Admin/Users/AddUser";
 import AuthenticationPage, {
     action as authAction,
 } from "./pages/Authentication";
+import { action as logoutAction } from "./pages/Logout";
+import { tokenLoader } from "./util/auth";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <DefaultLayout />,
+        id: "default",
+        loader: tokenLoader,
         errorElement: <ErrorPage />,
         children: [
             {
@@ -25,6 +29,16 @@ export const router = createBrowserRouter([
                 element: <AuthenticationPage />,
                 action: authAction,
             },
+
+            {
+                path: "/logout",
+                action: logoutAction,
+            },
+            {
+                path: "/users",
+                element: <UsersPage />,
+                loader: loadUsers,
+            },
         ],
     },
     {
@@ -32,12 +46,6 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         errorElement: <ErrorPage />,
         children: [
-            {
-                path: "users",
-                index: true,
-                element: <UsersPage />,
-                loader: loadUsers,
-            },
             {
                 path: "users/new",
 

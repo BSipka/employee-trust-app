@@ -22,12 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
+    Route::get('/users', function () {
+        return response(['users' => User::all()], 200);
+    });
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/users', function () {
-    return response(['users' => User::all()], 200);
-});
+
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/register', RegisterController::class);
