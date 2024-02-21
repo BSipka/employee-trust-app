@@ -1,9 +1,9 @@
 function PageContent({ title, children }) {
     return (
-        <div>
+        <main>
             <h1>{title}</h1>
             {children}
-        </div>
+        </main>
     );
 }
 

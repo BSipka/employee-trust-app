@@ -27,21 +27,22 @@ export const router = createBrowserRouter([
             },
         ],
     },
-    // {
-    //     path: "/admin",
-    //     element: <AdminLayout />,
-    //     children: [
-    //         {
-    //             path: "users",
-    //             index: true,
-    //             element: <UsersPage />,
-    //             loader: loadUsers,
-    //         },
-    //         {
-    //             path: "users/new",
+    {
+        path: "/admin",
+        element: <AdminLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: "users",
+                index: true,
+                element: <UsersPage />,
+                loader: loadUsers,
+            },
+            {
+                path: "users/new",
 
-    //             element: <AddUserPage />,
-    //         },
-    //     ],
-    // },
+                element: <AddUserPage />,
+            },
+        ],
+    },
 ]);
