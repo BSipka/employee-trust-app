@@ -1,9 +1,7 @@
 import React from "react";
 import User from "./User";
-import { useLoaderData } from "react-router-dom";
 
-export default function UsersList() {
-    const users = useLoaderData();
+export default function UsersList({users}) {
 
     return (
         <table>
@@ -16,10 +14,13 @@ export default function UsersList() {
                 </tr>
             </thead>
             <tbody>
-                {users.map((user) => {
-                    return <User key={user.id} user={user} />;
-                })}
+                {users.length &&
+                    users.map((user) => {
+                        return <User key={user.id} user={user} />;
+                    })}
             </tbody>
         </table>
     );
 }
+
+

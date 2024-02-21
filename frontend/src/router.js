@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
 import HomePage from "./pages/Home";
-import LoginPage from "./pages/Login";
 import ErrorPage from "./pages/Error";
 import AdminLayout from "./layouts/AdminLayout";
-import UsersPage from "./pages/Admin/Users/Users";
+import UsersPage, { loadUsers } from "./pages/Admin/Users/Users";
 import AddUserPage from "./pages/Admin/Users/AddUser";
-import axios from "axios";
+import AuthenticationPage, {
+    action as authAction,
+} from "./pages/Authentication";
 
 export const router = createBrowserRouter([
     {
@@ -20,30 +21,27 @@ export const router = createBrowserRouter([
                 index: true,
             },
             {
-                path: "/login",
-                element: <LoginPage />,
+                path: "auth",
+                element: <AuthenticationPage />,
+                action: authAction,
             },
         ],
     },
-    {
-        path: "/admin",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "users",
-                index: true,
-                element: <UsersPage />,
-                loader: async () => {
-                    const res = await fetch("http://localhost:8000/api/users");
-                    const resData = await res.json();
-                    return resData;
-                },
-            },
-            {
-                path: "users/new",
-                index: true,
-                element: <AddUserPage />,
-            },
-        ],
-    },
+    // {
+    //     path: "/admin",
+    //     element: <AdminLayout />,
+    //     children: [
+    //         {
+    //             path: "users",
+    //             index: true,
+    //             element: <UsersPage />,
+    //             loader: loadUsers,
+    //         },
+    //         {
+    //             path: "users/new",
+
+    //             element: <AddUserPage />,
+    //         },
+    //     ],
+    // },
 ]);
