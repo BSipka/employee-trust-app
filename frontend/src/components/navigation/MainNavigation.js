@@ -1,33 +1,39 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 
-export default function AdminNavigation() {
+export default function MainNavigation() {
     return (
         <header className={classes.header}>
             <nav>
                 <ul className={classes.list}>
                     <li>
                         <NavLink
-                            to="/admin/users"
+                            to="/"
                             className={({ isActive }) =>
                                 isActive ? classes.active : undefined
                             }
                             end
                         >
-                            Users
+                            Home
                         </NavLink>
                     </li>
-                    {/* <li>
+
+                    <li>
                         <NavLink
-                            to="/login"
+                            to="/auth?mode=login"
                             className={({ isActive }) =>
                                 isActive ? classes.active : undefined
                             }
                         >
-                            Login
+                            Authentication
                         </NavLink>
-                    </li> */}
+                    </li>
+                    <li>
+                        <Form action="/logout" method="post">
+                            <button>Logout</button>
+                        </Form>
+                    </li>
                 </ul>
             </nav>
         </header>

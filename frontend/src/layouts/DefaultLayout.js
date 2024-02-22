@@ -1,8 +1,9 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import MainNavigation from "../components/MainNavigation";
+import { Outlet, useLoaderData } from "react-router-dom";
+import MainNavigation from "../components/navigation/MainNavigation";
 
 export default function DefaultLayout() {
+   
     return (
         <>
             <MainNavigation />

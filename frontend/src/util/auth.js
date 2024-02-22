@@ -1,8 +1,17 @@
-export function getAuthToken() {
-    const token = localStorage.getItem("token");
-    return token;
+export function getAuthUser() {
+    const authUser = localStorage.getItem("auth_user");
+    return JSON.parse(authUser);
 }
 
-export function tokenLoader() {
-    return getAuthToken();
+export function authUserLoader() {
+    return getAuthUser();
+}
+
+export function getAuthToken() {
+    const user = getAuthUser();
+
+    if (user) {
+        return user[1];
+    }
+    return;
 }

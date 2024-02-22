@@ -9,14 +9,15 @@ import AuthenticationPage, {
     action as authAction,
 } from "./pages/Authentication";
 import { action as logoutAction } from "./pages/Logout";
-import { tokenLoader } from "./util/auth";
+import { authUserLoader } from "./util/auth";
+import ApplicantLayout from "./layouts/ApplicantLayout";
+import JobsPage from "./pages/Applicant/Jobs";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <DefaultLayout />,
         id: "default",
-        loader: tokenLoader,
         errorElement: <ErrorPage />,
         children: [
             {
@@ -24,31 +25,46 @@ export const router = createBrowserRouter([
                 element: <HomePage />,
                 index: true,
             },
+
             {
                 path: "auth",
                 element: <AuthenticationPage />,
                 action: authAction,
             },
-
             {
-                path: "/logout",
+                path: "logout",
                 action: logoutAction,
             },
+        ],
+    },
+    {
+        path: "applicant",
+        element: <ApplicantLayout />,
+        id: "applicant",
+        loader: authUserLoader,
+        errorElement: <ErrorPage />,
+        children: [
             {
-                path: "/users",
-                element: <UsersPage />,
+                index: true,
+                element: <JobsPage />,
                 loader: loadUsers,
             },
         ],
     },
     {
-        path: "/admin",
+        path: "admin",
         element: <AdminLayout />,
+        id: "admin",
+        loader: authUserLoader,
         errorElement: <ErrorPage />,
         children: [
             {
+                index: true,
+                element: <UsersPage />,
+                loader: loadUsers,
+            },
+            {
                 path: "users/new",
-
                 element: <AddUserPage />,
             },
         ],
