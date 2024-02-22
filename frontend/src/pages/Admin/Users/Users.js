@@ -10,7 +10,7 @@ export default function UsersPage() {
 }
 
 export async function loadUsers() {
-    const res = api.get("/users").then((response) => {
+    const res = api.get("/admin/users").then((response) => {
         if (response.status !== 200) {
             throw json({ message: "Could not load users." }, { status: 500 });
         }
