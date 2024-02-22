@@ -43,5 +43,5 @@ export async function action({ request }) {
         JSON.stringify([resData.user, resData.token])
     );
 
-    return redirect("/");
+    return redirect(`/${resData.user.role.toLowerCase()}`);
 }

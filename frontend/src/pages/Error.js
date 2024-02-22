@@ -15,6 +15,14 @@ export default function ErrorPage() {
         message = "Could not find resource or page";
     }
 
+    if (error.status === 403) {
+        message = error.data.message;
+    }
+
+    if (error.status === 401) {
+        message = error.data.message;
+    }
+
     return (
         <>
             <PageContent title={title}>

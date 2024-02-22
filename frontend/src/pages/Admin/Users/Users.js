@@ -4,7 +4,7 @@ import { json, useLoaderData } from "react-router-dom";
 import api from "../../../util/api";
 
 export default function UsersPage() {
-    const users = useLoaderData();
+    const users = useLoaderData("users");
 
     return <UsersList users={users} />;
 }
@@ -15,7 +15,7 @@ export async function loadUsers() {
             throw json({ message: "Could not load users." }, { status: 500 });
         }
 
-        return response.data.users;
+        return response.data;
     });
 
     return res;

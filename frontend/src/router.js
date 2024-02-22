@@ -2,15 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
 import HomePage from "./pages/Home";
 import ErrorPage from "./pages/Error";
-import AdminLayout from "./layouts/AdminLayout";
+import AdminLayout, { loader as adminLoader } from "./layouts/AdminLayout";
 import UsersPage, { loadUsers } from "./pages/Admin/Users/Users";
 import AddUserPage from "./pages/Admin/Users/AddUser";
 import AuthenticationPage, {
     action as authAction,
 } from "./pages/Authentication";
 import { action as logoutAction } from "./pages/Logout";
-import { authUserLoader } from "./util/auth";
-import ApplicantLayout from "./layouts/ApplicantLayout";
+import ApplicantLayout, {
+    loader as applicantLoader,
+} from "./layouts/ApplicantLayout";
 import JobsPage from "./pages/Applicant/Jobs";
 
 export const router = createBrowserRouter([
@@ -41,11 +42,15 @@ export const router = createBrowserRouter([
         path: "applicant",
         element: <ApplicantLayout />,
         id: "applicant",
-        loader: authUserLoader,
+        loader: applicantLoader,
         errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
+                element: <HomePage />,
+            },
+            {
+                path: "jobs",
                 element: <JobsPage />,
             },
         ],
@@ -54,12 +59,18 @@ export const router = createBrowserRouter([
         path: "admin",
         element: <AdminLayout />,
         id: "admin",
-        loader: authUserLoader,
+        loader: adminLoader,
         errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
+                element: <HomePage />,
+            },
+
+            {
+                path: "users",
                 element: <UsersPage />,
+                id: "users",
                 loader: loadUsers,
             },
             {
