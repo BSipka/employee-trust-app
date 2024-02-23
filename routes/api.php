@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\RegisterController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,16 +24,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::get('/users', function () {
-        return response(['users' => User::all()], 200);
+    Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
+        Route::get('/users', [UserController::class, 'index']);
+        Route::post('/users', [UserController::class, 'create']);
+        Route::put('/users/{user}/update', [UserController::class, 'update']);
     });
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-        Route::get('/users', function () {
-            return User::all();
-        });
-    });
 });
 
 
