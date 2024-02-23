@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\CreateRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Redis\RedisManager;
-use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -29,19 +30,17 @@ class UserController extends Controller
         return response($users, 200);
     }
 
-    public function create(Request $request, User $user)
+    public function create(CreateRequest $request)
     {
-        // Todo: Validation
-        $user->create($request->all());
+        User::create($request->validated());
 
-        return response(['message' => 'User created.', 201]);
+        return response(['message' => 'User created.'], 201);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateRequest $request, User $user)
     {
-        // Todo: Validation
 
-        $user->update($request->all());
+        $user->update($request->validated());
 
         return response(['message' => 'User updated'], 200);
     }
