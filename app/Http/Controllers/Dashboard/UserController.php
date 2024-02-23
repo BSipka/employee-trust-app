@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $cachedUsers = $this->redis->get('all_users');
-        
+
         if (isset($cachedUsers)) {
             $data = json_decode($cachedUsers);
             return response($data, 200);
@@ -24,7 +24,7 @@ class UserController extends Controller
 
         $users = User::all();
 
-        $this->redis->set('all_users', $users);
+        $this->redis->set('all_users', $users, null, 60);
 
         return response($users, 200);
     }
