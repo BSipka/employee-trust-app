@@ -26,7 +26,9 @@ class AuthController extends Controller
 
         $token = $user->createToken('access-token')->plainTextToken;
         $response = [
-            'user' => $user,
+            'full_name' => $user->fullName(),
+            'role' => $user->role,
+            'is_verified' => $user->hasVerifiedEmail(),
             'token' => $token
         ];
 

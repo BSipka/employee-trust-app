@@ -25,7 +25,7 @@ class UserController extends Controller
 
         $users = User::all();
 
-        $this->redis->set('all_users', $users, null, 60);
+        $this->redis->set('all_users', $users, 'EX', 60);
 
         return response($users, 200);
     }

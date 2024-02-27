@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\VerifyRegistrationController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
         Route::get('/users', [UserController::class, 'index']);
@@ -30,7 +31,15 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::put('/users/{user}/update', [UserController::class, 'update']);
     });
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::withoutMiddleware('verified')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/verify-code', [VerifyRegistrationController::class, 'verify']);
+        Route::post('/resend-code', [VerifyRegistrationController::class, 'resend']);
+    });
+
+    Route::get('/test', function () {
+        return 'Test';
+    });
 });
 
 
