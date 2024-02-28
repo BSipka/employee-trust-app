@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\VerifyRegistrationController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,5 +45,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
 
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/reset-password', ResetPasswordController::class);
 
 Route::post('/register', RegisterController::class);
