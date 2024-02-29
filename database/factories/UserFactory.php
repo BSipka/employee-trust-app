@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\Role;
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,13 +25,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $role = Role::random();
+        $companies = Company::all();
         return [
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'role' => Role::random(),
+            'role' => $role,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'company_id' => ($role === Role::EMPLOYER) ? $companies->random()->id : null,
             'remember_token' => Str::random(10),
         ];
     }

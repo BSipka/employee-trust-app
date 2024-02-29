@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\Applicant\JobApplyController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
@@ -41,6 +44,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/test', function () {
         return 'Test';
     });
+
+    Route::get('/advertisements', [AdvertisementController::class, 'index']);
+    Route::get('/companies', [CompanyController::class, 'index']);
+
+    Route::post('/job-apply', JobApplyController::class);
 });
 
 
