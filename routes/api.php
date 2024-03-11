@@ -1,15 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdvertisementController;
-use App\Http\Controllers\Applicant\JobApplyController;
+use App\Http\Controllers\Applicant\AdvertisementController as ApplicantAdvertisementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\VerifyRegistrationController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +33,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::put('/users/{user}/update', [UserController::class, 'update']);
     });
 
+    Route::group(['prefix' => 'applicant'], function () {
+        Route::post('/advertisements-apply', [ApplicantAdvertisementController::class, 'apply']);
+        Route::post('/advertisements-save', [ApplicantAdvertisementController::class, 'save']);
+    });
+
     Route::withoutMiddleware('verified')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/verify-code', [VerifyRegistrationController::class, 'verify']);
@@ -47,8 +50,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::get('/advertisements', [AdvertisementController::class, 'index']);
     Route::get('/companies', [CompanyController::class, 'index']);
-
-    Route::post('/job-apply', JobApplyController::class);
 });
 
 

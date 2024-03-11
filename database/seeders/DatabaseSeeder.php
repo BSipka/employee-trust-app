@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Enums\AdvertisementStatus;
 use App\Enums\Role;
 use Illuminate\Database\Seeder;
 
@@ -27,12 +28,20 @@ class DatabaseSeeder extends Seeder
 
         $applicants = \App\Models\User::applicants()->get();
 
+
         \App\Models\Advertisement::factory(10)->create();
 
 
 
         \App\Models\Advertisement::all()->each(function ($ad) use ($applicants) {
             $ad->applicants()->attach(
+                $applicants->random(rand(1, count($applicants)))->pluck('id')->toArray(),
+                ['reviewed' => rand(0, 1)]
+            );
+        });
+
+        \App\Models\Advertisement::all()->each(function ($ad) use ($applicants) {
+            $ad->applicant_saved()->attach(
                 $applicants->random(rand(1, count($applicants)))->pluck('id')->toArray()
             );
         });

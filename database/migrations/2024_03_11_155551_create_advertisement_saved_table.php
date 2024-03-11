@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('advertisement_user', function (Blueprint $table) {
+        Schema::create('advertisement_saved', function (Blueprint $table) {
 
             $table->unsignedBigInteger('advertisement_id');
             $table->foreign('advertisement_id')->references('id')->on('advertisements')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->boolean('reviewed')->default(0);
 
             $table->primary(['advertisement_id', 'user_id']);
             $table->timestamps();
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('advertisement_user');
+        Schema::dropIfExists('advertisement_saved');
     }
 };

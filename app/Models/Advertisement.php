@@ -21,6 +21,12 @@ class Advertisement extends Model
     }
     public function applicants()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'advertisement_user')->withTimestamps();
     }
+
+    public function applicant_saved()
+    {
+        return $this->belongsToMany(User::class, 'advertisement_saved')->withTimestamps();
+    }
+
 }
