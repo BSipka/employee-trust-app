@@ -76,6 +76,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === Role::ADMIN->value;
     }
 
+    public function isApplicant()
+    {
+        return $this->role === Role::APPLICANT->value;
+    }
+
     public function scopeEmployers(Builder $builder)
     {
         $builder->where('role', Role::EMPLOYER->value);

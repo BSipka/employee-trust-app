@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Applicant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdvertisementApplyRequest;
+use App\Http\Requests\AdvertisementSaveRequest;
 use Illuminate\Http\Request;
 
 class AdvertisementController extends Controller
@@ -13,11 +14,11 @@ class AdvertisementController extends Controller
      */
     public function apply(AdvertisementApplyRequest $request)
     {
-        $request->user()->applications()->attach($request->advertisement_id);
+        auth()->user()->applications()->attach($request->advertisement_id);
         return response(['message' => 'Advertisement applied'], 201);
     }
 
-    public function save(Request $request)
+    public function save(AdvertisementSaveRequest $request)
     {
         if (auth()->user()->advertisement_saved()->detach($request->advertisement_id)) {
             return response(['message' => 'Advertisement unsaved'], 200);

@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::put('/users/{user}/update', [UserController::class, 'update']);
     });
 
-    Route::group(['prefix' => 'applicant'], function () {
+    Route::group(['prefix' => 'applicant', 'middleware' => 'applicant'], function () {
         Route::post('/advertisements-apply', [ApplicantAdvertisementController::class, 'apply']);
         Route::post('/advertisements-save', [ApplicantAdvertisementController::class, 'save']);
     });
