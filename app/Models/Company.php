@@ -13,8 +13,8 @@ class Company extends Model
         'name',
         'industry'
     ];
-    public function employers()
+    public function advertisements()
     {
-        return $this->hasManyThrough(User::class, Advertisement::class);
+        return $this->hasManyThrough(Advertisement::class, User::class, 'company_id', 'employer_id');
     }
 }

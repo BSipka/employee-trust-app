@@ -21,4 +21,11 @@ class AdvertisementApplyRequest extends BaseRequest
             ]
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'advertisement_id.unique' => 'Already applied'
+        ];
+    }
 }
