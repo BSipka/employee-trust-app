@@ -12,6 +12,6 @@ class AdvertisementController extends Controller
     {
         $advertisements = Advertisement::with('employer')->get();
 
-        return $advertisements;
+        return $advertisements->pluck('image');
     }
 }

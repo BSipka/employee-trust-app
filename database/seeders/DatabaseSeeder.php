@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\AdvertisementStatus;
 use App\Enums\Role;
+use App\Models\Image;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Company::factory(10)->create();
+        $companies = \App\Models\Company::factory(10)->create();
         \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
@@ -29,9 +30,23 @@ class DatabaseSeeder extends Seeder
         $applicants = \App\Models\User::applicants()->get();
 
 
-        \App\Models\Advertisement::factory(10)->create();
+        $advertisements = \App\Models\Advertisement::factory(10)->create();
 
+        foreach ($advertisements as $ad) {
+            Image::create([
+                'imageable_id' => $ad->id,
+                'imageable_type' => 'App\Models\Advertisement',
+                'url' => 'https://picsum.photos/200/300'
+            ]);
+        }
 
+        foreach ($companies as $company) {
+            Image::create([
+                'imageable_id' => $company->id,
+                'imageable_type' => 'App\Models\Company',
+                'url' => 'https://picsum.photos/200/300'
+            ]);
+        }
 
         \App\Models\Advertisement::all()->each(function ($ad) use ($applicants) {
             $ad->applicants()->attach(
