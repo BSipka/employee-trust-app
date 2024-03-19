@@ -9,6 +9,11 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return Company::all();
+        return Company::get();
+    }
+
+    public function show(Company $company)
+    {
+        return $company;
     }
 }

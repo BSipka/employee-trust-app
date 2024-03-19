@@ -44,12 +44,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::post('/resend-code', [VerifyRegistrationController::class, 'resend']);
     });
 
-    Route::get('/test', function () {
-        return 'Test';
-    });
-
     Route::get('/advertisements', [AdvertisementController::class, 'index']);
     Route::get('/companies', [CompanyController::class, 'index']);
+    Route::get('/companies/{company}/show', [CompanyController::class, 'show']);
 });
 
 
