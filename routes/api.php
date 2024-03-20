@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::get('/advertisements', [AdvertisementController::class, 'index']);
     Route::get('/companies', [CompanyController::class, 'index']);
-    Route::get('/companies/{company}/show', [CompanyController::class, 'show']);
+    Route::get('/companies/{company}', [CompanyController::class, 'show']);
 });
 
 
